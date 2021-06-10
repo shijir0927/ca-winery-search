@@ -1,24 +1,46 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { FC, useState, useEffect } from 'react';
 import './App.css';
+import Dropdown from 'react-bootstrap/Dropdown';
+import {getAxiosCall} from './utils/apiCalls';
 
-function App() {
+const URL = 'https://discovercaliforniawines.com/discover-california/';
+interface IProps {
+}
+
+const App: FC<IProps> = (props: IProps)=>  {
+
+  const [regionData, setRegionData] = useState();
+
+  const getRegionData = async(region:string) =>{
+    const responseData = await getAxiosCall(region);
+    console.log(responseData)
+    setRegionData(responseData);
+  }
+
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+    <div>
+      <header>
+        <p>Search CA Wines</p>
       </header>
+      <div className="container">
+        <Dropdown>
+          <Dropdown.Toggle variant="success" id="dropdown-basic">
+            Select Region
+          </Dropdown.Toggle>
+
+          <Dropdown.Menu>
+            <Dropdown.Item onClick={()=>getRegionData('/north-coast')}>North Coast</Dropdown.Item>
+            <Dropdown.Item onClick={()=>getRegionData('/central-coast')}>Central Coast</Dropdown.Item>
+            <Dropdown.Item onClick={()=>getRegionData('/sierra-foothills')}>Sierra Foothills</Dropdown.Item>
+            <Dropdown.Item onClick={()=>getRegionData('/inland-valleys')}>Inland valleys</Dropdown.Item>
+            <Dropdown.Item onClick={()=>getRegionData('/southern-california')}>Southern California</Dropdown.Item>
+            <Dropdown.Item onClick={()=>getRegionData('/far-north-california')}>Far North California</Dropdown.Item>
+          </Dropdown.Menu>
+        </Dropdown>
+
+        <div>{regionData && regionData}</div>
+      </div>
     </div>
   );
 }

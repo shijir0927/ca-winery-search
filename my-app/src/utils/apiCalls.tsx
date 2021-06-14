@@ -1,4 +1,5 @@
 import axios from 'axios';
+import request from 'request';
 
 // Axios Get Call - get the HTML page
 export const getAxiosCall = async (url: string) => {

@@ -14,11 +14,39 @@ header {
   height: 60px;
   background-color: #193c38;
   display: flex !important;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
 }
 
 header > p{
   font-size: 1.25em;
   color: white;
+  margin: 0;
+}
+
+.county-card{
+  height: 40px;
+  width: auto;
+  padding: 10px;
+  border: 1px solid #193c38;
+  border-radius: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 10px;
+}
+
+.county-card:hover{
+  cursor: pointer;
+  background-color: #193c38;
+  color: white;
+}
+
+.county-card > p{
+  margin: 0;
+}
+
+.counties{
+  display: flex;
+  flex-wrap: wrap;
 }

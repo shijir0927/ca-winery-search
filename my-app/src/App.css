@@ -46,7 +46,32 @@ header > p{
   margin: 0;
 }
 
-.counties{
+.counties-container{
   display: flex;
   flex-wrap: wrap;
+}
+
+.regions-container{
+  display: flex;
+  width: 100%;
+  height: 60px;
+  align-items: center;
+  justify-content: space-around;
+  /* background-color: #193c38; */
+}
+
+.regions-container >div> p{
+  margin: 0;
+  font-weight: bold;
+  font-size: 18px;
+  color: black;
+}
+
+.regions-container >div> p:hover{
+  cursor: pointer;
+  color:#193c38;
+}
+
+.selected-region > p{
+  color: red !important;
 }

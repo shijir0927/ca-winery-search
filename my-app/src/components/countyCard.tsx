@@ -3,16 +3,14 @@ import '../App.css';
 
 interface IProps {
   name: string;
-  link: string;
+  path: string;
+  handleClick?: any;
 }
 
 const CountyCard: FC <IProps> = (props:IProps) =>{
 
-  const {name, link} = props;
+  const {name, path, handleClick} = props;
 
-  const handleClick = () =>{
-    console.log(link)
-  }
 
   return(
     <div className='county-card'> 

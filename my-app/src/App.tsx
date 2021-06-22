@@ -1,30 +1,24 @@
 import React, { FC, useState, useEffect } from 'react';
 import './App.css';
-import Dropdown from 'react-bootstrap/Dropdown';
 import {getAxiosCall} from './utils/apiCalls';
 import * as cheerio from 'cheerio';
 import CountyCard from './components/countyCard';
-
+import RegionCard from './components/regionCard';
+import {REGIONS} from './constants/regions';
 interface IProps {
-}
-
-interface Region{
-  name: string;
-  address: string | any;
-  link: string | undefined;
 }
 
 const App: FC<IProps> = (props: IProps)=>  {
 
-  const [regionData, setRegionData] = useState<any>([]);
+  const [regionData, setRegionData] = useState('');
 
   useEffect(()=>{
-    // getRegionData('north-coast');
   },[])
 
-  const getRegionData = async(region:string) =>{
-    const responseData = await getAxiosCall(region);
+  const handleCountyClick = async(path:any)=>{
+    const responseData = await getAxiosCall('/getWinery/'+regionData + '/' + path);
     // console.log(responseData)
+
     let $ = cheerio.load(responseData);
     let resultArray:any[] = [];
     $("#posts_countable_list li").each(function(i, element) {
@@ -36,38 +30,35 @@ const App: FC<IProps> = (props: IProps)=>  {
       resultArray.push(result);
     });
 
-    let half = Math.floor(resultArray.length/2);
-    let uniqueArray = resultArray.slice(0, half);
-    console.log(uniqueArray)
-    setRegionData(resultArray)
+    console.log(resultArray)
   }
 
+  const getRegionCounties = () =>{
+    let counties:any = [];
+    REGIONS.forEach((item)=>{
+      if(item.path === regionData){
+        counties = item.counties;
+      }
+    })
+
+    return counties.map((item:any, index:number)=>{
+      return (<CountyCard name={item.name} path={item.path} handleClick={()=>handleCountyClick(item.path)} key={index}/>)
+    })
+  }
 
   return (
     <div>
       <header>
         <p>Search CA Wines</p>
-        <Dropdown>
-          <Dropdown.Toggle variant="success" id="dropdown-basic">
-            Select Region
-          </Dropdown.Toggle>
-
-          <Dropdown.Menu>
-            <Dropdown.Item onClick={()=>getRegionData('/north-coast')}>North Coast</Dropdown.Item>
-            <Dropdown.Item onClick={()=>getRegionData('/central-coast')}>Central Coast</Dropdown.Item>
-            <Dropdown.Item onClick={()=>getRegionData('/sierra-foothills')}>Sierra Foothills</Dropdown.Item>
-            <Dropdown.Item onClick={()=>getRegionData('/inland-valleys')}>Inland valleys</Dropdown.Item>
-            <Dropdown.Item onClick={()=>getRegionData('/southern-california')}>Southern California</Dropdown.Item>
-            <Dropdown.Item onClick={()=>getRegionData('/far-north-california')}>Far North California</Dropdown.Item>
-          </Dropdown.Menu>
-        </Dropdown>
       </header>
       <div className="container">
-        <p>{regionData.length}</p>
-        <div className='counties'>
-        {regionData && regionData.map((item:any, index:number)=>{
-          return (<CountyCard name={item.name} link={item.link} key={index}/>)
-        })}
+        <div className='regions-container'>
+          {REGIONS.map((item:any, index: number)=>{
+            return (<RegionCard name={item.name} path={item.path} handleClick={()=>setRegionData(item.path)} selected={regionData===item.path} key={index}/>)
+          })}
+        </div>
+        <div className='counties-container'>
+          {getRegionCounties()}
         </div>
       </div>
     </div>

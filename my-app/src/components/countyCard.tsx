@@ -13,8 +13,8 @@ const CountyCard: FC <IProps> = (props:IProps) =>{
 
 
   return(
-    <div className='county-card'> 
-      <p onClick={handleClick}>{name}</p>
+    <div className='county-card' onClick={handleClick}> 
+      <p>{name}</p>
     </div>
   )
 }

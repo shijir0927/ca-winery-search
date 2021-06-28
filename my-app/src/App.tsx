@@ -6,7 +6,6 @@ import CountyCard from './components/countyCard';
 import RegionCard from './components/regionCard';
 import {REGIONS} from './constants/regions';
 import Airtable from "airtable";
-import { table } from 'console';
 const base = new Airtable({ apiKey: 'key2NRWl08o5DUlCy' }).base('appH1XlYPbZSY2Vtg');
 interface IProps {
 }
@@ -16,7 +15,7 @@ const App: FC<IProps> = (props: IProps)=>  {
   const [regionData, setRegionData] = useState('');
   const [wineries, setWineries] = useState<any>([]);
   const [county, setCounty] = useState('');
-  const [tableName, setTableName] = useState('Dummy');
+  const [tableName, setTableName] = useState('');
 
   useEffect(()=>{
 
@@ -53,19 +52,12 @@ const App: FC<IProps> = (props: IProps)=>  {
       if (err) { console.error(err); return; }
   });
   }
-  const dummyData = [
-      {
-        "fields": {
-          "Winery Name" : "new name 1"
-        }
-      },
-      {
-        "fields": {
-          "Winery Name" : "new name 1"
-        }
-      }
-    ]
+  
   const createRecords = (data:any, tableName:string) =>{
+    if(!tableName.length){
+      alert('Please enter the table name!')
+      return;
+    }
     base(tableName).create(
       data
     , function(err:any, records:any) {
@@ -77,14 +69,13 @@ const App: FC<IProps> = (props: IProps)=>  {
       records?.forEach(function (record:any) {
         console.log(record.getId());
       });
-      alert(`Successfully created ${records.length} records!`)
+      alert(`Successfully created ${records.length} records in ${tableName}!`)
     });
-    
   }
 
 
   const handleCountyClick = async(path:string, name: string)=>{
-    const responseData = await getAxiosCall('/getWinery/'+regionData + '/' + path);
+    const responseData = await getAxiosCall('/getWinery/'+regionData + '/' + path);//fetching data
     // console.log(responseData)
     setCounty(name);
     let $ = cheerio.load(responseData);
@@ -135,6 +126,10 @@ const App: FC<IProps> = (props: IProps)=>  {
   }
 
   const createCountyRecords = ()=>{
+    if(!tableName.length){
+      alert('Please enter the table name!')
+      return;
+    }
     let data = [];
 
     for(let i=0; i< wineries.length; i++){
@@ -165,14 +160,19 @@ const App: FC<IProps> = (props: IProps)=>  {
     <div>
       <header>
         <p>Search CA Wineries</p>
-        <input className='table-name-input' placeholder='Table Name' onChange={(e)=>setTableName(e.target.value)}/>
+        <div className='header-right'>
+          <input className='table-name-input' placeholder='Table Name' onChange={(e)=>setTableName(e.target.value)}/>
+          <a href='https://airtable.com/shrsIp9DqeZK7ih6E' target='_blank'>Link to Airtable</a>
+        </div>
       </header>
-      <div className="container">
-        <div className='regions-container'>
+
+      <div className='regions-container'>
           {REGIONS.map((item:any, index: number)=>{
             return (<RegionCard name={item.name} path={item.path} handleClick={()=>setRegionData(item.path)} selected={regionData===item.path} key={index}/>)
           })}
-        </div>
+      </div>
+      <div className="container">
+        
         <div className='counties-container'>
           {getRegionCounties()}
         </div>

@@ -7,6 +7,7 @@
 .contaier{
   margin: 0;
   padding:0;
+  background-color: #f2f2f2;
 }
 
 header {
@@ -23,6 +24,14 @@ header > p{
   color: white;
   margin: 0;
   font-weight: bold;
+}
+
+.header-right > a{
+  font-size: 1.25em;
+  color: white;
+  margin: 0;
+  font-weight: bold;
+  margin-left: 20px;
 }
 
 .county-card{
@@ -54,11 +63,11 @@ header > p{
 
 .regions-container{
   display: flex;
-  width: 100%;
   height: 60px;
   align-items: center;
   justify-content: space-around;
-  /* background-color: #193c38; */
+  background-color: #f2f2f2;
+  width: 100vw !important;
 }
 
 .regions-container >div> p{
@@ -100,4 +109,5 @@ header > p{
   padding: 5px;
   border-radius: 10px;
   border: none;
+  outline: none;
 }

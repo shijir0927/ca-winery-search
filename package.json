@@ -1,0 +1,28 @@
+{
+  "name": "ca-winery-search",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm test",
+    "build": "cd my-app && npm install && npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shijir0927/ca-winery-search.git"
+  },
+  "author": "Shijir",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/shijir0927/ca-winery-search/issues"
+  },
+  "homepage": "https://github.com/shijir0927/ca-winery-search#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "morgan": "^1.10.0",
+    "path": "^0.12.7"
+  },
+  "engines": {
+    "node": "14.17.0"
+  }
+}

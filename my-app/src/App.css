@@ -111,3 +111,44 @@ header > p{
   border: none;
   outline: none;
 }
+
+@media (max-width: 768px){
+  .regions-container >div> p{
+    margin: 0;
+    font-weight: bold;
+    font-size: 14px;
+    color: black;
+  }
+
+  .county-card > p{
+    margin: 0;
+    font-size: 14px;
+  }
+
+  .county-card{
+    height: 30px;
+    width: auto;
+    padding: 5px;
+    border: 1px solid #193c38;
+    border-radius: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 5px;
+  }
+  .county-title-container > h3{
+    font-size: 18px;
+    font-weight: bold;
+  }
+
+  .airtable-button{
+    font-size: 14px;
+  }
+
+  header{
+    flex-direction: column;
+    height: auto;
+    padding: 10px;
+  }
+}
+

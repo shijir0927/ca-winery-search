@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "npm test",
+    "start": "node index.js",
     "build": "cd my-app && npm install && npm run build"
   },
   "repository": {
